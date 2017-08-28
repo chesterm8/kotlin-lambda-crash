@@ -24,3 +24,6 @@ hs_err_pid*
 #IntelliJ
 workspace.xml
 tasks.xml
+
+#Build dir
+/build

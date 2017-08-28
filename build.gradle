@@ -1,7 +1,15 @@
+plugins {
+    //Works with this line
+    id "org.jetbrains.kotlin.jvm" version "1.1.3-2"
+    //Doesn't work with this line
+    //id "org.jetbrains.kotlin.jvm" version "1.1.4-2"
+}
+
 group 'chesterm8'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'idea'
 
 sourceCompatibility = 1.8
 
@@ -10,4 +18,18 @@ repositories {
 }
 
 dependencies {
+    compile('com.amazonaws:aws-lambda-java-core:1.1.0',
+            'com.fasterxml.jackson.module:jackson-module-kotlin:2.8.9')
+}
+
+task zipLambda(type: Zip) {
+
+    archiveName "chesterm8.kotlin.zip"
+    from compileJava
+    from processResources
+    from "build/buildinfo.properties"
+    into('lib') {
+        from configurations.compile
+        exclude 'aws-lambda-java-core*.jar'
+    }
 }
